@@ -1,4 +1,4 @@
-FROM ubuntu:wily
+FROM debian:jessie
 
 MAINTAINER Zankard <zankard@gmail.com>
 
@@ -20,7 +20,8 @@ RUN deps="build-essential git-core ca-certificates autoconf libtool libssl-dev" 
   && make install \
   && apt-get purge --auto-remove -y $deps \
   && cd / \
-  && rm -rf /shadowsocks
+  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /shadowsocks-libev
 
 EXPOSE $PORT
 
