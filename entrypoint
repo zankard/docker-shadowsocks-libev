@@ -7,21 +7,21 @@ VERBOSE_OPTS=$VERBOSE
 case $SERVICE in
   server)
     HOST_OPTS="-s 0.0.0.0"
-    PORT_OPTS="-p $PORT"
+    PORT_OPTS="-p $SERVER_PORT"
     ;;
   tunnel)
     HOST_OPTS="-s $SERVER_ADDR"
-    PORT_OPTS="-p $PORT"
-    LOCAL_PORT_OPTS="-l $PORT"
+    PORT_OPTS="-p $SERVER_PORT"
     LOCAL_BIND_ADDR="-b 0.0.0.0"
+    LOCAL_PORT_OPTS="-l $LOCAL_PORT"
     FORWARD_OPTS="-L ${FORWARD_ADDR}:${FORWARD_PORT}"
     UDPRELAY_OPTS="-u"
     ;;
   local)
     HOST_OPTS="-s $SERVER_ADDR"
-    PORT_OPTS="-p $PORT"
+    PORT_OPTS="-p $SERVER_PORT"
     LOCAL_BIND_ADDR="-b 0.0.0.0"
-    LOCAL_PORT_OPTS="-l $PORT"
+    LOCAL_PORT_OPTS="-l $LOCAL_PORT"
     ;;
   *)
     exit 1

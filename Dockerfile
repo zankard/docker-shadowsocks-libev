@@ -3,8 +3,9 @@ FROM debian:jessie
 MAINTAINER Zankard <zankard@gmail.com>
 
 ENV SERVICE="server"
-ENV PORT=8388
 ENV SERVER_ADDR ""
+ENV SERVER_PORT=8388
+ENV LOCAL_PORT=1080
 ENV FORWARD_ADDR ""
 ENV FORWARD_PORT ""
 ENV PASSWORD ""
@@ -22,8 +23,6 @@ RUN deps="build-essential git-core ca-certificates autoconf libtool libssl-dev" 
   && cd / \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /shadowsocks-libev
-
-EXPOSE $PORT
 
 ADD entrypoint /
 ENTRYPOINT ["/entrypoint"]
