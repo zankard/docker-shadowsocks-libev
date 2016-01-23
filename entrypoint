@@ -1,0 +1,27 @@
+CIPHER_OPTS="-m aes-256-cfb"
+PASSWORD_OPTS="-k $PASSWORD"
+VERBOSE_OPTS=$VERBOSE
+
+case $SERVICE in
+  server)
+    HOST_OPTS="-s 0.0.0.0"
+    PORT_OPTS="-p $PORT"
+    ;;
+  tunnel)
+    HOST_OPTS="-s $SERVER_ADDR"
+    PORT_OPTS="-p $PORT"
+    LOCAL_PORT_OPTS="-l $PORT"
+    FORWARD_OPTS="-L ${FORWARD_ADDR}:${FORWARD_PORT}"
+    UDPRELAY_OPTS="-u"
+    ;;
+  local)
+    HOST_OPTS="-s $SERVER_ADDR"
+    PORT_OPTS="-p $PORT"
+    LOCAL_PORT_OPTS="-l $PORT"
+    ;;
+  *)
+    exit(1)
+    ;;
+fi
+
+exec gosu /usr/local/bin/ss-${SERVICE} $CIPHER_OPTS $PASSWORD_OPTS $HOST_OPTS $PORT_OPTS $LOCAL_PORT_OPTS $FORWARD_OPTS $UDPRELAY_OPTS $VERBOSE_OPTS
